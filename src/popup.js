@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `<img src="${faviconUrl}" 
                                 onerror="this.onerror=null; this.src='images/icon-16.png';" 
                                 class="me-1" width="16" height="16" alt="" />` :
-                    `<i class="ti ti-world me-1" style="font-size: 16px;"></i>`
+                    `<i class="bi bi-globe me-1" style="font-size: 16px;"></i>`
                 }
                         <strong>URL:</strong> ${rule.urlPattern}
                     </div>
@@ -123,10 +123,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                         <div>
                             <button class="btn btn-sm btn-outline-primary me-2 edit" data-id="${rule.id}">
-                                <i class="ti ti-edit"></i> Edit
+                                <i class="bi bi-pencil-square"></i> Edit
                             </button>
                             <button class="btn btn-sm btn-outline-danger delete" data-id="${rule.id}">
-                                <i class="ti ti-trash"></i> Delete
+                                <i class="bi bi-trash"></i> Delete
                             </button>
                         </div>
                     </div>
@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <input type="text" class="form-control name" placeholder="Header name" value="${name}">
             <input type="text" class="form-control value" placeholder="Header value" value="${value}">
             <button type="button" class="btn btn-outline-danger delete-header">
-                <i class="ti ti-circle-minus"></i>
+                <i class="bi bi-dash-circle"></i>
             </button>
         `;
         headersContainer.appendChild(div);

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HeaderForge</title>
     <link rel="stylesheet" href="libs/bootstrap-5.3.3/bootstrap.min.css">
-    <link rel="stylesheet" href="libs/tabler-icons-3.30.0/tabler-icons.min.css">
+    <link rel="stylesheet" href="libs/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="popup.css">
 </head>
 
@@ -38,13 +38,13 @@
             <li class="nav-item">
                 <button class="nav-link active" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-panel"
                     type="button" role="tab" aria-controls="edit-panel" aria-selected="true">
-                    <i class="ti ti-edit"></i> Create/Edit Rule
+                    <i class="bi bi-pencil"></i> Create/Edit Rule
                 </button>
             </li>
             <li class="nav-item">
                 <button class="nav-link" id="manage-tab" data-bs-toggle="tab" data-bs-target="#manage-panel"
                     type="button" role="tab" aria-controls="manage-panel" aria-selected="false">
-                    <i class="ti ti-list"></i> Manage Rules
+                    <i class="bi bi-list-task"></i> Manage Rules
                 </button>
             </li>
         </ul>
@@ -60,12 +60,12 @@
                             <div class="mb-3">
                                 <label for="urlPattern" class="form-label">URL Pattern</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="ti ti-world"></i></span>
+                                    <span class="input-group-text"><i class="bi bi-globe"></i></span>
                                     <input type="text" class="form-control" id="urlPattern"
                                         placeholder="e.g., *://*.example.com/*">
                                     <button class="btn btn-outline-secondary" type="button" data-bs-toggle="tooltip"
                                         title="Learn about URL pattern matching" id="helpButton">
-                                        <i class="ti ti-help"></i>
+                                        <i class="bi bi-question-circle"></i>
                                     </button>
                                 </div>
                                 <div class="form-text">Use wildcards (*) to match multiple domains or paths</div>
@@ -83,7 +83,7 @@
 
                                 <div class="mt-2">
                                     <button type="button" class="btn btn-sm btn-outline-primary" id="addHeader">
-                                        <i class="ti ti-circle-plus"></i> Add Header
+                                        <i class="bi bi-plus-circle"></i> Add Header
                                     </button>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                             <!-- Form action buttons -->
                             <div class="d-flex justify-content-end mt-3">
                                 <button type="button" class="btn btn-outline-success" id="saveRule">
-                                    <i class="ti ti-device-floppy"></i> Save Rule
+                                    <i class="bi bi-floppy"></i> Save Rule
                                 </button>
                             </div>
                         </form>
@@ -105,16 +105,16 @@
                     <div class="card-body">
                         <!-- Rules panel header with export/import buttons -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="card-title mb-0"><i class="ti ti-list-check me-2"></i>Your Rules</h5>
+                            <h5 class="card-title mb-0"><i class="bi bi-check-square me-2"></i>Your Rules</h5>
                             <div class="btn-group">
                                 <!-- Export button -->
                                 <button class="btn btn-sm btn-outline-secondary" id="exportRules">
-                                    <i class="ti ti-file-download"></i> Export
+                                    <i class="bi bi-file-earmark-arrow-down"></i> Export
                                 </button>
 
                                 <!-- Import button -->
                                 <button class="btn btn-sm btn-outline-secondary" id="importRules">
-                                    <i class="ti ti-file-upload"></i> Import
+                                    <i class="bi bi-file-earmark-arrow-up"></i> Import
                                 </button>
                                 <input type="file" id="importInput" style="display: none;">
                             </div>
@@ -130,7 +130,7 @@
                         <!-- Delete all rules button -->
                         <div class="d-flex justify-content-end mt-3">
                             <button class="btn btn-sm btn-outline-danger" id="deleteAllRules">
-                                <i class="ti ti-clear-all"></i> Delete All Rules
+                                <i class="bi bi-x-circle"></i> Delete All Rules
                             </button>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
 
     <!-- Footer -->
     <footer class="text-center my-2 text-muted small">
-        Made with <i class="ti ti-heart text-danger"></i> by Fabrizio Bagalà
+        Made with <i class="bi bi-heart text-danger"></i> by Fabrizio Bagalà
     </footer>
 
     <!-- Script dependencies -->
