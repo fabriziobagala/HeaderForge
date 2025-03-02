@@ -48,6 +48,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+
+    rulesList.addEventListener('change', (event) => {
+        const toggleSwitch = event.target.closest('.toggle-rule');
+        if (toggleSwitch) {
+            handleToggleRuleClick({ dataset: { id: toggleSwitch.dataset.id }, checked: toggleSwitch.checked });
+        }
+    });
+
     // ========== Initialize UI ==========
 
     // Start with one empty header row and load existing rules
@@ -85,6 +93,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 faviconUrl = await faviconCache.getFavicon(domain);
             }
 
+            // Default enabled to true if not specified
+            const isEnabled = rule.enabled !== false;
+
             // Generate rule HTML
             rulesHTML.push(`
                 <div class="list-group-item">
@@ -102,13 +113,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `${h.operation} ${h.name}` + (h.value ? `=${h.value}` : '')
                 ).join(', ')}
                     </div>
-                    <div class="d-flex justify-content-end mt-2">
-                        <button class="btn btn-sm btn-outline-primary me-2 edit" data-id="${rule.id}">
-                            <i class="ti ti-edit"></i> Edit
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger delete" data-id="${rule.id}">
-                            <i class="ti ti-trash"></i> Delete
-                        </button>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-rule" type="checkbox" role="switch"
+                                id="toggle-${rule.id}" data-id="${rule.id}" ${isEnabled ? 'checked' : ''}>
+                            <label class="form-check-label" for="toggle-${rule.id}">
+                                ${isEnabled ? 'Enabled' : 'Disabled'}
+                            </label>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary me-2 edit" data-id="${rule.id}">
+                                <i class="ti ti-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger delete" data-id="${rule.id}">
+                                <i class="ti ti-trash"></i> Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             `);
@@ -168,6 +188,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Remove the rule from Chrome's declarativeNetRequest system
         await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: [id] });
         await loadRules();
+    }
+
+    /**
+     * Handles the toggle switch click event.
+     * Enables or disables a rule without deleting it.
+     * 
+     * @param {Object} e - Object containing dataset with rule id and checked state
+     * @param {Object} e.dataset - Dataset containing the rule id
+     * @param {string} e.dataset.id - String ID of the rule to toggle
+     * @param {boolean} e.checked - Whether the rule should be enabled
+     */
+    async function handleToggleRuleClick(e) {
+        const id = parseInt(e.dataset.id);
+        const isEnabled = e.checked;
+        const { rules = [] } = await chrome.storage.local.get('rules');
+
+        // Update the rule's enabled state in storage
+        const updatedRules = rules.map(r => {
+            if (r.id === id) {
+                return { ...r, enabled: isEnabled };
+            }
+            return r;
+        });
+
+        await chrome.storage.local.set({ rules: updatedRules });
+
+        // Update Chrome's declarativeNetRequest system
+        if (isEnabled) {
+            // Add the rule back if it's being enabled
+            const ruleToAdd = updatedRules.find(r => r.id === id);
+            if (ruleToAdd) {
+                await chrome.declarativeNetRequest.updateDynamicRules({
+                    addRules: [convertToDNRRule(ruleToAdd)]
+                });
+            }
+        } else {
+            // Remove the rule if it's being disabled
+            await chrome.declarativeNetRequest.updateDynamicRules({
+                removeRuleIds: [id]
+            });
+        }
     }
 
     /**
@@ -372,7 +433,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const newRule = { urlPattern, headers };
+        // Prepare new rule object
+        const newRule = {
+            urlPattern,
+            headers,
+            enabled: true
+        };
 
         // Prevent duplicate rules (ignore rule being currently edited)
         const isDuplicate = rules.some(existingRule => {

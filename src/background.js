@@ -23,8 +23,10 @@ async function initializeRules() {
         });
     }
 
-    // Add stored rules
-    const dnrRules = storedRules.map(convertToDNRRule);
+    // Add enabled stored rules
+    const enabledRules = storedRules.filter(rule => rule.enabled !== false);
+    const dnrRules = enabledRules.map(convertToDNRRule).filter(Boolean);
+
     if (dnrRules.length > 0) {
         await chrome.declarativeNetRequest.updateDynamicRules({
             addRules: dnrRules
