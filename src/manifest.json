@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "HeaderForge",
     "version": "1.0",
-    "description": "Modify request headers for specific URL patterns.",
+    "description": "Modify HTTP request headers for specific URL patterns.",
     "permissions": [
         "storage",
         "declarativeNetRequest"
