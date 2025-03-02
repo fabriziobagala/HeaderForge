@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeaderForge</title>
+    <link rel="stylesheet" href="libs/bootstrap-5.3.3/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/tabler-icons-3.30.0/tabler-icons.min.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container pt-3 px-3" style="min-width: 600px;">
+        <!-- Header section -->
+        <div class="mb-4 d-flex justify-content-between align-items-start">
+            <!-- Logo and title -->
+            <div class="d-flex align-items-start">
+                <img src="images/icon-32.png" alt="Extension Logo" class="me-2">
+                <div>
+                    <h2 class="mb-0">HeaderForge</h2>
+                    <p class="text-muted small" data-manifest="description"></p>
+                </div>
+            </div>
+
+            <!-- Theme toggle button -->
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="theme-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    data-bs-title="Toggle theme">
+                    <input type="checkbox" id="theme-toggle">
+                    <div class="slider round"></div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Tab navigation -->
+        <ul class="nav nav-tabs mb-3" id="mainTabs">
+            <li class="nav-item">
+                <button class="nav-link active" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-panel"
+                    type="button" role="tab" aria-controls="edit-panel" aria-selected="true">
+                    <i class="ti ti-edit"></i> Create/Edit Rule
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="manage-tab" data-bs-toggle="tab" data-bs-target="#manage-panel"
+                    type="button" role="tab" aria-controls="manage-panel" aria-selected="false">
+                    <i class="ti ti-list"></i> Manage Rules
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content" id="mainTabContent">
+            <!-- Create/Edit Rule Panel -->
+            <div class="tab-pane fade show active" id="edit-panel" role="tabpanel" aria-labelledby="edit-tab">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form id="ruleForm">
+                            <!-- URL Pattern input group -->
+                            <div class="mb-3">
+                                <label for="urlPattern" class="form-label">URL Pattern</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="ti ti-world"></i></span>
+                                    <input type="text" class="form-control" id="urlPattern"
+                                        placeholder="e.g., *://*.example.com/*">
+                                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="tooltip"
+                                        title="Learn about URL pattern matching" id="helpButton">
+                                        <i class="ti ti-help"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">Use wildcards (*) to match multiple domains or paths</div>
+                            </div>
+
+                            <!-- Headers section - dynamically populated with header rows -->
+                            <div class="mb-3">
+                                <label for="headers" class="form-label">Headers</label>
+
+                                <!-- Scrollable container for headers -->
+                                <div class="position-relative border rounded" style="height: 120px;">
+                                    <div id="headers"
+                                        class="p-2 position-absolute top-0 start-0 end-0 bottom-0 overflow-auto"></div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addHeader">
+                                        <i class="ti ti-circle-plus"></i> Add Header
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Form action buttons -->
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="button" class="btn btn-outline-success" id="saveRule">
+                                    <i class="ti ti-device-floppy"></i> Save Rule
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Rules Panel  -->
+            <div class="tab-pane fade" id="manage-panel" role="tabpanel" aria-labelledby="manage-tab">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <!-- Rules panel header with export/import buttons -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0"><i class="ti ti-list-check me-2"></i>Your Rules</h5>
+                            <div class="btn-group">
+                                <!-- Export button -->
+                                <button class="btn btn-sm btn-outline-secondary" id="exportRules">
+                                    <i class="ti ti-file-download"></i> Export
+                                </button>
+
+                                <!-- Import button -->
+                                <button class="btn btn-sm btn-outline-secondary" id="importRules">
+                                    <i class="ti ti-file-upload"></i> Import
+                                </button>
+                                <input type="file" id="importInput" style="display: none;">
+                            </div>
+                        </div>
+
+                        <!-- Scrollable container for rules list -->
+                        <div class="position-relative" style="height: 262px;">
+                            <div id="rulesList"
+                                class="list-group list-group-flush position-absolute top-0 start-0 end-0 bottom-0 overflow-auto">
+                            </div>
+                        </div>
+
+                        <!-- Delete all rules button -->
+                        <div class="d-flex justify-content-end mt-3">
+                            <button class="btn btn-sm btn-outline-danger" id="deleteAllRules">
+                                <i class="ti ti-clear-all"></i> Delete All Rules
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center my-2 text-muted small">
+        Made with <i class="ti ti-heart text-danger"></i> by Fabrizio Bagalà
+    </footer>
+
+    <!-- Script dependencies -->
+    <script src="libs/bootstrap-5.3.3/bootstrap.bundle.min.js"></script>
+    <script src="scripts/favicon-cache.js" type="module"></script>
+    <script src="scripts/manifest-info.js" type="module"></script>
+    <script src="scripts/theme-toggle.js" type="module"></script>
+    <script src="scripts/tooltips.js" type="module"></script>
+    <script src="popup.js" type="module"></script>
+</body>
+
+</html>
