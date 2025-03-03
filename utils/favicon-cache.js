@@ -31,7 +31,6 @@ class FaviconCache {
             // No valid cache, fetch and store
             return await this.fetchAndCacheFavicon(domain);
         } catch (error) {
-            console.error('Error getting favicon:', error);
             return null;
         }
     }
