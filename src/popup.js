@@ -21,8 +21,14 @@ document.addEventListener('DOMContentLoaded', async () => {
      */
     let currentRuleId = null;
 
-    // ========== Event Listeners Setup ==========
+    // ========== Initialize Manifest Info ==========
+    // Get manifest data and populate description
+    const manifest = chrome.runtime.getManifest();
+    document.querySelectorAll('[data-manifest="description"]').forEach(el => {
+        el.textContent = manifest.description;
+    });
 
+    // ========== Event Listeners Setup ==========
     // Main action buttons
     addHeaderButton.addEventListener('click', addHeaderRow);
     saveRuleButton.addEventListener('click', saveRule);
@@ -57,13 +63,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // ========== Initialize UI ==========
-
     // Start with one empty header row and load existing rules
     addHeaderRow();
     await loadRules();
 
     // ========== Rule Management Functions ==========
-
     /**
      * Loads rules from storage and renders them into the UI.
      */
