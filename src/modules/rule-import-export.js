@@ -1,5 +1,6 @@
 import { state } from '../popup.js';
 import { convertToDNRRule } from '../utils/dnr-utils.js';
+import { showToast } from '../utils/toast-notification.js';
 import { loadRules } from './rule-manager.js';
 
 /**
@@ -138,9 +139,9 @@ export async function importRules(event) {
 
         // Reset file input and show import summary
         event.target.value = '';
-        alert(`Import summary:\n- ${uniqueNewRules.length} new rules imported\n- ${duplicateRules.length} duplicate rules skipped`);
+        showToast(`Import summary: ${uniqueNewRules.length} new rules imported, ${duplicateRules.length} duplicate rules skipped`, 'success');
     } catch (error) {
-        alert(`Failed to import rules: ${error.message}`);
+        showToast(`Failed to import rules: ${error.message}`, 'danger');
         event.target.value = '';
     }
 }

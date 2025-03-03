@@ -1,6 +1,7 @@
 import { state } from '../popup.js';
 import { convertToDNRRule } from '../utils/dnr-utils.js';
 import { faviconCache } from '../utils/favicon-cache.js';
+import { showToast } from '../utils/toast-notification.js';
 import { areRulesEquivalent } from './rule-import-export.js';
 import { addHeaderRow } from './ui-helpers.js';
 
@@ -10,14 +11,14 @@ import { addHeaderRow } from './ui-helpers.js';
 export async function loadRules() {
     const { elements } = window.app;
     const { rulesList, exportButton, deleteAllRulesButton } = elements;
-    
+
     const { rules = [] } = await chrome.storage.local.get(['rules']);
-    
+
     // Disable buttons if there are no rules
     const hasRules = rules.length > 0;
     exportButton.disabled = !hasRules;
     deleteAllRulesButton.disabled = !hasRules;
-    
+
     // Clean expired cache entries occasionally (every ~10 loads)
     if (Math.random() < 0.1) {
         faviconCache.cleanCache();
@@ -226,7 +227,7 @@ export async function saveRule() {
 
     // Validate required fields
     if (!urlPattern || !headers.length) {
-        alert('Please enter URL pattern and at least one valid header');
+        showToast('Please enter URL pattern and at least one valid header', 'warning');
         return;
     }
 
@@ -235,7 +236,7 @@ export async function saveRule() {
 
     // Check against Chrome's rule limit for new rules
     if (rules.length >= chrome.declarativeNetRequest.MAX_NUMBER_OF_DYNAMIC_RULES && state.currentRuleId === null) {
-        alert(`Cannot add more rules. Chrome extensions are limited to ${chrome.declarativeNetRequest.MAX_NUMBER_OF_DYNAMIC_RULES} dynamic rules.`);
+        showToast(`Cannot add more rules. Chrome extensions are limited to ${chrome.declarativeNetRequest.MAX_NUMBER_OF_DYNAMIC_RULES} dynamic rules.`, 'danger');
         return;
     }
 
@@ -253,7 +254,7 @@ export async function saveRule() {
     });
 
     if (isDuplicate) {
-        alert('A rule with these exact URL patterns and headers already exists.');
+        showToast('A rule with these exact URL patterns and headers already exists.', 'warning');
         return;
     }
 
@@ -296,4 +297,5 @@ export async function saveRule() {
     headersContainer.innerHTML = '';
     addHeaderRow();
     await loadRules();
+    showToast('Rule saved successfully!', 'success');
 }
