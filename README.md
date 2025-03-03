@@ -39,7 +39,7 @@ A browser extension that lets you modify HTTP request headers for specific URL p
 
 - JavaScript
 - Bootstrap for UI components
-- Tabler Icons for icons
+- Bootstrap Icons for icons
 - Chrome Extension API
 
 ## 📄 License
