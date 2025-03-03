@@ -35,13 +35,6 @@ A browser extension that lets you modify HTTP request headers for specific URL p
     - **Enable/disable rules**: Toggle the switch for any rule
 3. All changes take effect immediately for new requests, but you must refresh web pages to see them applied effectively
 
-## 🛠️ Technologies
-
-- JavaScript
-- Bootstrap for UI components
-- Bootstrap Icons for icons
-- Chrome Extension API
-
 ## 📄 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
