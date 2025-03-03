@@ -41,10 +41,10 @@ The extension is organized as follows:
 - `background` - Contains the service worker that applies rules in the background
     - `service_worker.js` - Initializes and applies header modification rules
 - `icons` - Extension icons in various sizes for browser display
-- `images` - Contains SVG logo and UI assets
+- `images` - Contains SVG logo
 - `lib` - Third-party libraries
-    - `bootstrap-5.3.3/` - CSS framework for the UI
-    - `bootstrap-icons-1.11.3/` - Icon set used throughout the interface
+    - `bootstrap/` - CSS framework for the UI
+    - `bootstrap-icons/` - Icon set used throughout the interface
 - `modules` - Core business logic
     - `rule-import-export.js` - Handles importing/exporting of rules
     - `rule-manager.js` - CRUD operations for header rules
@@ -52,6 +52,7 @@ The extension is organized as follows:
 - `utils` - Utility functions
     - `dnr-utils.js` - Declarative Net Request API helpers
     - `favicon-cache.js` - Caching system for domain favicons
+    - `toast-notification.js` - Toast notification system for user feedback
 - `popup.js` - Main entry point for the extension UI
 - `popup.html` - HTML structure for the extension popup
 - `popup.css` - Styling for the extension popup
