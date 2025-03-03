@@ -1,4 +1,4 @@
-import { convertToDNRRule } from './scripts/dnr-utils.js';
+import { convertToDNRRule } from '../scripts/dnr-utils.js';
 
 chrome.runtime.onStartup.addListener(initializeRules);
 chrome.runtime.onInstalled.addListener(initializeRules);
