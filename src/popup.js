@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             urlPatternInput,
             headersContainer,
             rulesList,
-            exportButton
+            exportButton,
+            deleteAllRulesButton
         }
     };
 

@@ -9,13 +9,15 @@ import { addHeaderRow } from './ui-helpers.js';
  */
 export async function loadRules() {
     const { elements } = window.app;
-    const { rulesList, exportButton } = elements;
-
+    const { rulesList, exportButton, deleteAllRulesButton } = elements;
+    
     const { rules = [] } = await chrome.storage.local.get(['rules']);
-
-    // Disable export button if there are no rules
-    exportButton.disabled = rules.length === 0;
-
+    
+    // Disable buttons if there are no rules
+    const hasRules = rules.length > 0;
+    exportButton.disabled = !hasRules;
+    deleteAllRulesButton.disabled = !hasRules;
+    
     // Clean expired cache entries occasionally (every ~10 loads)
     if (Math.random() < 0.1) {
         faviconCache.cleanCache();
