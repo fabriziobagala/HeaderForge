@@ -1,5 +1,5 @@
-import { convertToDNRRule } from './scripts/dnr-utils.js';
-import { faviconCache } from './scripts/favicon-cache.js';
+import { convertToDNRRule } from './utils/dnr-utils.js';
+import { faviconCache } from './utils/favicon-cache.js';
 
 const INITIAL_RULE_ID = 1;
 
