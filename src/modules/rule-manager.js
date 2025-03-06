@@ -1,6 +1,7 @@
 import { state } from '../popup.js';
 import { convertToDNRRule } from '../utils/dnr-utils.js';
 import { faviconCache } from '../utils/favicon-cache.js';
+import { showConfirmation } from '../utils/modal-confirmation.js';
 import { showToast } from '../utils/toast-notification.js';
 import { areRulesEquivalent } from './rule-import-export.js';
 import { addHeaderRow } from './ui-helpers.js';
@@ -187,8 +188,15 @@ export async function handleToggleRuleClick(e) {
  * Deletes all rules from storage and dynamic rules.
  */
 export async function deleteAllRules() {
-    // First confirm with the user to prevent accidental deletion
-    if (!confirm('Are you sure you want to delete all rules? This cannot be undone.')) {
+    // First confirm with the user to prevent accidental deletion using modal
+    const confirmed = await showConfirmation(
+        'Are you sure you want to delete all rules? This cannot be undone.',
+        'Delete All Rules',
+        'Delete',
+        'danger'
+    );
+
+    if (!confirmed) {
         return;
     }
 
@@ -206,6 +214,7 @@ export async function deleteAllRules() {
 
     // Update the UI
     await loadRules();
+    showToast('All rules have been deleted', 'success');
 }
 
 /**
