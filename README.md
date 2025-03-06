@@ -52,6 +52,7 @@ The extension is organized as follows:
 - `utils` - Utility functions
     - `dnr-utils.js` - Declarative Net Request API helpers
     - `favicon-cache.js` - Caching system for domain favicons
+    - `modal-confirmation.js` - Bootstrap modal confirmation dialogs
     - `toast-notification.js` - Toast notification system for user feedback
 - `popup.js` - Main entry point for the extension UI
 - `popup.html` - HTML structure for the extension popup
