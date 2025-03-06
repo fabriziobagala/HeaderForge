@@ -14,7 +14,7 @@ export function addHeaderRow(operation = 'set', name = '', value = '') {
     const div = document.createElement('div');
     div.className = 'header input-group mb-2';
     div.innerHTML = `
-        <select class="form-select operation" style="max-width: 100px;">
+        <select class="form-select operation" style="max-width: 110px;">
             <option value="set" ${operation === 'set' ? 'selected' : ''}>Set</option>
             <option value="remove" ${operation === 'remove' ? 'selected' : ''}>Remove</option>
         </select>
