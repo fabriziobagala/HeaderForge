@@ -68,7 +68,7 @@ export async function exportRules() {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     } catch (error) {
-        alert('Failed to export rules. Please try again.');
+        showToast(`Export failed: ${error.message}`, 'danger');
     }
 }
 
