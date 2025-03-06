@@ -124,7 +124,7 @@ export async function handleEditButtonClick(e) {
  */
 export async function handleDeleteButtonClick(e) {
     const id = parseInt(e.dataset.id);
-    const { rules = [] } = await chrome.storage.local.get('rules');
+    const { rules = [], ruleIdOffset = 0 } = await chrome.storage.local.get(['rules', 'ruleIdOffset']);
     const updatedRules = rules.filter(r => r.id !== id);
 
     // Update storage and reset nextRuleId if no rules left
@@ -134,8 +134,11 @@ export async function handleDeleteButtonClick(e) {
     }
     await chrome.storage.local.set(storageUpdate);
 
-    // Remove the rule from Chrome's declarativeNetRequest system
-    await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: [id] });
+    // Remove the rule from Chrome's declarativeNetRequest system using the stored offset
+    await chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: [id + ruleIdOffset]
+    });
+
     await loadRules();
 }
 
